@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JQ Time</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #111;
+      color: #f2f2f2;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      font-size: 1.2em;
+      width: 100px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <h1>JQ Time</h1>
+  <input type="number" id="inputMinutes" placeholder="Enter minutes..." min="0" />
+  <button onclick="convertTime()">Convert</button>
+  <div id="result"></div>
+
+  <script>
+    function convertTime() {
+      const input = document.getElementById('inputMinutes').value;
+      const minutes = parseFloat(input);
+
+      let resultText = '';
+
+      if (isNaN(minutes) || minutes < 0) {
+        resultText = "⛔ Please enter a valid number.";
+      } else {
+        let actualMinutes;
+
+        if (minutes <= 2) {
+          actualMinutes = 15;
+        } else if (minutes <= 5) {
+          actualMinutes = 25;
+        } else if (minutes <= 10) {
+          actualMinutes = 40;
+        } else if (minutes <= 20) {
+          actualMinutes = 60;
+        } else if (minutes <= 30) {
+          actualMinutes = 150;
+        } else if (minutes <= 60) {
+          actualMinutes = minutes * 3.5;
+        } else {
+          actualMinutes = minutes * 3;
+        }
+
+        const hours = Math.floor(actualMinutes / 60);
+        const remainingMinutes = Math.round(actualMinutes % 60);
+
+        if (hours > 0) {
+          resultText = `${hours} hour(s) and ${remainingMinutes} minute(s)`;
+        } else {
+          resultText = `${remainingMinutes} minutes`;
+        }
+      }
+
+      document.getElementById('result').textContent = resultText;
+    }
+  </script>
+</body>
+</html>
